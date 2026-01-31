@@ -1,12 +1,26 @@
 import React from 'react';
 import { Link } from 'react-router';
+import UseAuth from '../../../hooks/UseAuth';
 
 const Navbar = () => {
+
+    const {user,logOut}=UseAuth();
+
+
+    const handlelogOut=()=>{
+        logOut()
+        .then(result=>{console.log(result)})
+        .catch(error=>{
+            console.log(error)
+        })
+    }
 
 
     const links = <>
 
         <li><Link to='/'>Home</Link></li>
+        <li><Link to='/login'>Login</Link></li>
+        <li><Link to='/register'>Register</Link></li>
 
 
     </>
@@ -26,7 +40,7 @@ const Navbar = () => {
                             }
                         </ul>
                     </div>
-                    <a className="btn btn-ghost text-xl">daisyUI</a>
+                    <Link to={'/'} className="btn btn-ghost text-xl">CityCare</Link>
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">
@@ -36,7 +50,9 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <a className="btn">Button</a>
+                   {
+                    user?  <a onClick={handlelogOut} className="btn">logOut</a>: <Link to={'/login'} className="btn">login</Link>
+                   }
                 </div>
             </div>
         </div>
