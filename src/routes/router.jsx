@@ -4,6 +4,11 @@ import RootLayout from "../Layouts/RootLayout";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Auth/Login/Login";
 import Register from "../Pages/Auth/Register/Register";
+import DashLayout from "../Layouts/DashLayout";
+import CitizenHome from "../Pages/Dashboard/Citizen/CitizenHome";
+import CreateIssue from "../Pages/Dashboard/Citizen/CreateIssue";
+import MyIssues from "../Pages/Dashboard/Citizen/MyIssues";
+import IssueDetails from "../Pages/Dashboard/Citizen/IssueDetails";
 
 
  export const router = createBrowserRouter([
@@ -25,5 +30,27 @@ import Register from "../Pages/Auth/Register/Register";
         }
     ]
   },
+  {
+    path:'/dashboard',
+    element:<DashLayout></DashLayout>,
+    children:[
+      {
+        index:true,
+        element:<CitizenHome></CitizenHome>
+      },
+      {
+        path:'create-issue',
+        element:<CreateIssue></CreateIssue>
+      },
+      {
+        path:'my-issue',
+        element:<MyIssues></MyIssues>
+      },
+      {
+        path:'issue-details',
+        element:<IssueDetails></IssueDetails>
+      }
+    ]
+  }
 ]);
 
