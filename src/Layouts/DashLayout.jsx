@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router';
-import { FaHome, FaCog, FaBars } from "react-icons/fa";
+import { FaHome, FaCog, FaBars, FaExclamationTriangle, FaUserCircle } from "react-icons/fa";
 import { FiPlusCircle } from 'react-icons/fi';
+import { MdOutlineInfo } from 'react-icons/md';
 
 const DashLayout = () => {
     return (
@@ -41,13 +42,50 @@ const DashLayout = () => {
 
                             {/* create issue */}
                             <li>
-                                <Link 
+                                <Link
                                     to={'/dashboard/create-issue'}
                                     className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center gap-2"
                                     data-tip="Create issue"
                                 >
-                                      <FiPlusCircle size={20} />
+                                    <FiPlusCircle size={20} />
                                     <span className="is-drawer-close:hidden">Create issue</span>
+                                </Link>
+                            </li>
+
+                            {/* issue details */}
+                            <li>
+                                <Link
+                                    to={'/dashboard/issue-details'}
+                                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center gap-2"
+                                    data-tip="Issue Details"
+                                >
+                                    <MdOutlineInfo size={20} />
+                                    <span className="is-drawer-close:hidden">Issue Details</span>
+                                </Link>
+                            </li>
+
+
+                            {/*my isssue */}
+                            <li>
+                                <Link
+                                    to={'/dashboard/my-issue'}
+                                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center gap-2"
+                                    data-tip="My Issue"
+                                >
+                                  <FaExclamationTriangle size={24}  />
+                                    <span className="is-drawer-close:hidden"> My Issue </span>
+                                </Link>
+                            </li>
+
+                            {/*citizen profile */}
+                            <li>
+                                <Link
+                                    to={'/dashboard/citizen-profile'}
+                                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center gap-2"
+                                    data-tip="Citizen Profile"
+                                >
+                                  <FaUserCircle size={26} />
+                                    <span className="is-drawer-close:hidden">Citizen Profile</span>
                                 </Link>
                             </li>
 

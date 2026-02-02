@@ -9,6 +9,7 @@ import CitizenHome from "../Pages/Dashboard/Citizen/CitizenHome";
 import CreateIssue from "../Pages/Dashboard/Citizen/CreateIssue";
 import MyIssues from "../Pages/Dashboard/Citizen/MyIssues";
 import IssueDetails from "../Pages/Dashboard/Citizen/IssueDetails";
+import CitizenProfile from "../Pages/Dashboard/Citizen/CitizenProfile";
 
 
  export const router = createBrowserRouter([
@@ -49,6 +50,10 @@ import IssueDetails from "../Pages/Dashboard/Citizen/IssueDetails";
       {
         path:'issue-details',
         element:<IssueDetails></IssueDetails>
+      },
+      {
+        path:'citizen-profile',
+        element:<CitizenProfile></CitizenProfile>
       }
     ]
   }
