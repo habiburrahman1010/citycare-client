@@ -43,7 +43,7 @@ const CreateIssue = () => {
             })
             .then(() => {
 
-                navigate('/dashboard/my-issue');
+                navigate(`/dashboard/my-issue/userEmail=${user.email}`);
 
                 Swal.fire({
                     icon: 'success',
