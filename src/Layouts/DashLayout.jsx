@@ -3,8 +3,11 @@ import { Link, Outlet } from 'react-router';
 import { FaHome, FaCog, FaBars, FaExclamationTriangle, FaUserCircle } from "react-icons/fa";
 import { FiPlusCircle } from 'react-icons/fi';
 import { MdOutlineInfo } from 'react-icons/md';
+import UseAuth from '../hooks/UseAuth';
 
 const DashLayout = () => {
+
+    const {user}=UseAuth()
     return (
         <div>
             <div className="drawer lg:drawer-open">
@@ -68,7 +71,7 @@ const DashLayout = () => {
                             {/*my isssue */}
                             <li>
                                 <Link
-                                    to={'/dashboard/my-issue'}
+                                    to={`/dashboard/my-issue/${user?.email}`}
                                     className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center gap-2"
                                     data-tip="My Issue"
                                 >

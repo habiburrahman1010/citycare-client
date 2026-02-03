@@ -44,11 +44,11 @@ import CitizenProfile from "../Pages/Dashboard/Citizen/CitizenProfile";
         element:<CreateIssue></CreateIssue>
       },
       {
-        path:'my-issue',
+        path:'my-issue/:email',
         element:<MyIssues></MyIssues>
       },
       {
-        path:'issue-details',
+        path:'issue-details/:id',
         element:<IssueDetails></IssueDetails>
       },
       {
