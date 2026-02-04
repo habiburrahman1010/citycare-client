@@ -12,6 +12,13 @@ import IssueDetails from "../Pages/Dashboard/Citizen/IssueDetails";
 import CitizenProfile from "../Pages/Dashboard/Citizen/CitizenProfile";
 import PaymentSuccessfull from "../Pages/Dashboard/Citizen/PaymentSuccessfull";
 import PaymentCanceled from "../Pages/Dashboard/Citizen/PaymenCanceled";
+import PrivateRoute from "./PrivateRoute";
+import AdminHome from "../Pages/Dashboard/Admin/AdminHome";
+import AdminProfile from "../Pages/Dashboard/Admin/AdminProfile";
+import AllIssues from "../Pages/Dashboard/Admin/AllIssues";
+import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
+import ManageStaff from "../Pages/Dashboard/Admin/ManageStaff";
+import Payment from "../Pages/Dashboard/Admin/Payment";
 
 
 export const router = createBrowserRouter([
@@ -35,7 +42,7 @@ export const router = createBrowserRouter([
   },
   {
     path: '/dashboard',
-    element: <DashLayout></DashLayout>,
+    element:<PrivateRoute><DashLayout></DashLayout></PrivateRoute> ,
     children: [
       {
         index: true,
@@ -64,6 +71,31 @@ export const router = createBrowserRouter([
       {
         path: 'payment-canceled',
         element: <PaymentCanceled />
+      },
+      // ------------------------------------------------
+      {
+        path:'admin-home',
+        element:<AdminHome></AdminHome>
+      },
+      {
+        path:'admin-profile',
+        element:<AdminProfile></AdminProfile>
+      },
+      {
+        path:'admin-all-issue',
+        element:<AllIssues></AllIssues>
+      },
+      {
+        path:'mamage-users',
+        element:<ManageUsers></ManageUsers>
+      },
+      {
+        path:'manage-staff',
+        element:<ManageStaff></ManageStaff>
+      },
+      {
+        path:'payment',
+        element:<Payment></Payment>
       }
 
     ]

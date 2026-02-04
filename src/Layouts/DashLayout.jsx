@@ -4,10 +4,33 @@ import { FaHome, FaCog, FaBars, FaExclamationTriangle, FaUserCircle } from "reac
 import { FiPlusCircle } from 'react-icons/fi';
 import { MdOutlineInfo } from 'react-icons/md';
 import UseAuth from '../hooks/UseAuth';
+import { useQuery } from '@tanstack/react-query';
+import useAxiosSecure from '../hooks/useAxiosSecure';
 
 const DashLayout = () => {
 
-    const {user}=UseAuth()
+    const { user } = UseAuth();
+    const axiosSecure = useAxiosSecure();
+
+    const { data: dbUser, isLoading } = useQuery({
+        queryKey: ["dbUser", user?.email],
+        enabled: !!user?.email,
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/users/${user.email}`);
+            return res.data;
+        },
+    });
+
+    if (isLoading) return <p className="p-6">Loading...</p>;
+
+    const role = dbUser?.role;
+
+    console.log('role', role)
+
+
+
+
+
     return (
         <div>
             <div className="drawer lg:drawer-open">
@@ -32,76 +55,110 @@ const DashLayout = () => {
                     <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
                         <ul className="menu w-full grow">
 
-                            {/* Home */}
+                            {/* Home*/}
                             <li>
-                                <button
+                                <Link
+                                    to={'/'}
+
                                     className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center gap-2"
                                     data-tip="Homepage"
                                 >
                                     <FaHome className="text-lg" />
-                                    <span className="is-drawer-close:hidden">Homepage</span>
-                                </button>
-                            </li>
-
-                            {/* create issue */}
-                            <li>
-                                <Link
-                                    to={'/dashboard/create-issue'}
-                                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center gap-2"
-                                    data-tip="Create issue"
-                                >
-                                    <FiPlusCircle size={20} />
-                                    <span className="is-drawer-close:hidden">Create issue</span>
+                                    <span className="is-drawer-close:hidden">HomePage</span>
                                 </Link>
                             </li>
+                            {
+                                role === 'citizen' &&
 
-                            {/* issue details */}
-                            <li>
-                                <Link
-                                    to={'/dashboard/issue-details'}
-                                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center gap-2"
-                                    data-tip="Issue Details"
-                                >
-                                    <MdOutlineInfo size={20} />
-                                    <span className="is-drawer-close:hidden">Issue Details</span>
-                                </Link>
-                            </li>
+                                <>
+                                    {/*Dashboard Home*/}
+                                    <li>
+                                        <Link
+                                            to={'/dashboard'}
+
+                                            className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center gap-2"
+                                            data-tip="Homepage"
+                                        >
+                                            <FaHome className="text-lg" />
+                                            <span className="is-drawer-close:hidden">Dashboard Home</span>
+                                        </Link>
+                                    </li>
+
+                                    {/* create issue */}
+                                    <li>
+                                        <Link
+                                            to={'/dashboard/create-issue'}
+                                            className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center gap-2"
+                                            data-tip="Create issue"
+                                        >
+                                            <FiPlusCircle size={20} />
+                                            <span className="is-drawer-close:hidden">Create issue</span>
+                                        </Link>
+                                    </li>
 
 
-                            {/*my isssue */}
-                            <li>
-                                <Link
-                                    to={`/dashboard/my-issue/${user?.email}`}
-                                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center gap-2"
-                                    data-tip="My Issue"
-                                >
-                                  <FaExclamationTriangle size={24}  />
-                                    <span className="is-drawer-close:hidden"> My Issue </span>
-                                </Link>
-                            </li>
 
-                            {/*citizen profile */}
-                            <li>
-                                <Link
-                                    to={'/dashboard/citizen-profile'}
-                                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center gap-2"
-                                    data-tip="Citizen Profile"
-                                >
-                                  <FaUserCircle size={26} />
-                                    <span className="is-drawer-close:hidden">Citizen Profile</span>
-                                </Link>
-                            </li>
+                                    {/*my isssue */}
+                                    <li>
+                                        <Link
+                                            to={`/dashboard/my-issue/${user?.email}`}
+                                            className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center gap-2"
+                                            data-tip="My Issue"
+                                        >
+                                            <FaExclamationTriangle size={24} />
+                                            <span className="is-drawer-close:hidden"> My Issue </span>
+                                        </Link>
+                                    </li>
 
-                            {/* Settings */}
-                            <li>
-                                <button
-                                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center gap-2"
-                                    data-tip="Settings"
-                                >
-                                    <FaCog className="text-lg" />
-                                    <span className="is-drawer-close:hidden">Settings</span>
-                                </button>
-                            </li>
+                                    {/*citizen profile */}
+                                    <li>
+                                        <Link
+                                            to={'/dashboard/citizen-profile'}
+                                            className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center gap-2"
+                                            data-tip="Citizen Profile"
+                                        >
+                                            <FaUserCircle size={26} />
+                                            <span className="is-drawer-close:hidden">Citizen Profile</span>
+                                        </Link>
+                                    </li>
+
+
+                                </>
+                            }
+
+                            {
+                                role === "admin" &&
+                                <>
+
+                                    {/*Dashboard Home*/}
+                                    <li>
+                                        <Link
+                                            to={'/dashboard/admin-home'}
+
+                                            className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center gap-2"
+                                            data-tip="Homepage"
+                                        >
+                                            <FaHome className="text-lg" />
+                                            <span className="is-drawer-close:hidden">Admin Home</span>
+                                        </Link>
+                                    </li>
+
+
+
+                                    {/*citizen profile */}
+                                    <li>
+                                        <Link
+                                            to={'/dashboard/admin-profile'}
+                                            className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center gap-2"
+                                            data-tip="Admin Profile"
+                                        >
+                                            <FaUserCircle size={26} />
+                                            <span className="is-drawer-close:hidden">Admin Profile</span>
+                                        </Link>
+                                    </li>
+
+                                </>
+                            }
 
                         </ul>
                     </div>
