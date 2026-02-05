@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router';
 import { FaHome, FaCog, FaBars, FaExclamationTriangle, FaUserCircle } from "react-icons/fa";
-import { FiPlusCircle } from 'react-icons/fi';
+import { FiPlusCircle, FiUsers } from 'react-icons/fi';
 import { MdOutlineInfo } from 'react-icons/md';
 import UseAuth from '../hooks/UseAuth';
 import { useQuery } from '@tanstack/react-query';
@@ -126,11 +126,13 @@ const DashLayout = () => {
                                 </>
                             }
 
+                            {/* --------------------------------------------- */}
+
                             {
                                 role === "admin" &&
                                 <>
 
-                                    {/*Dashboard Home*/}
+                                    {/*Admin Home*/}
                                     <li>
                                         <Link
                                             to={'/dashboard/admin-home'}
@@ -145,7 +147,19 @@ const DashLayout = () => {
 
 
 
-                                    {/*citizen profile */}
+                                    {/*manage users*/}
+                                    <li>
+                                        <Link
+                                            to={'/dashboard/mamage-users'}
+                                            className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center gap-2"
+                                            data-tip="manage Users"
+                                        >
+                                           <FiUsers size={24} />
+                                            <span className="is-drawer-close:hidden">Manage Users</span>
+                                        </Link>
+                                    </li>
+
+                                    {/*Admin profile */}
                                     <li>
                                         <Link
                                             to={'/dashboard/admin-profile'}
