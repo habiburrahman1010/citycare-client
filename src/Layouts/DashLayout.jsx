@@ -159,6 +159,29 @@ const DashLayout = () => {
                                         </Link>
                                     </li>
 
+                                    {/*manage staff*/}
+                                    <li>
+                                        <Link
+                                            to={'/dashboard/manage-staff'}
+                                            className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center gap-2"
+                                            data-tip="manage staff"
+                                        >
+                                           <FiUsers size={24} />
+                                            <span className="is-drawer-close:hidden">Manage staff</span>
+                                        </Link>
+                                    </li>
+                                    {/*All issue*/}
+                                    <li>
+                                        <Link
+                                            to={'/dashboard/admin-all-issue'}
+                                            className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center gap-2"
+                                            data-tip="All issue"
+                                        >
+                                           <FiUsers size={24} />
+                                            <span className="is-drawer-close:hidden">All Issue</span>
+                                        </Link>
+                                    </li>
+
                                     {/*Admin profile */}
                                     <li>
                                         <Link
