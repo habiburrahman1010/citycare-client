@@ -33,34 +33,39 @@ const CitizenProfile = () => {
         try {
             let photoURL = profile.photoURL;
 
-
             if (newPhoto) {
                 const formData = new FormData();
-                formData.append('image', newPhoto);
+                formData.append("image", newPhoto);
 
                 const imgbbURL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMAGE_HOST}`;
-                const res = await axios.post(imgbbURL, formData); // plain axios for external API
-                photoURL = res.data.data.url; // get uploaded image URL
+                const res = await axios.post(imgbbURL, formData);
+                photoURL = res.data.data.url;
             }
-
 
             const updateData = {
                 displayName: newName || profile.displayName,
                 photoURL,
             };
 
+            const res = await axiosSecure.patch(`/users/${user.email}`, updateData);
 
-            const updatedUser = await axiosSecure.patch(`/users/${user.email}`, updateData);
-
-            Swal.fire('Success', 'Profile updated successfully', 'success');
-            setNewPhoto(null);
-            setNewName('');
-            refetch();
+            if (res.data) {
+                Swal.fire("Success", "Profile updated successfully", "success");
+                setNewPhoto(null);
+                setNewName("");
+                refetch();
+                refetchUser?.(); 
+            }
         } catch (error) {
-            console.error(error);
-            Swal.fire('Error', 'Failed to update profile', 'error');
+            console.error("Update error:", error);
+            Swal.fire(
+                "Error",
+                error.response?.data?.message || "Failed to update profile",
+                "error"
+            );
         }
     };
+
 
 
     const handleSubscribe = async () => {

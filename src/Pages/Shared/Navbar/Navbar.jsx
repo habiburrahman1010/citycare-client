@@ -19,6 +19,8 @@ const Navbar = () => {
     const links = <>
 
         <li><Link to='/'>Home</Link></li>
+        <li><Link to='/all-issues-public'>All Issues</Link></li>
+
 
         {
             user&& <li><Link to='/dashboard'>Dashboard</Link></li>

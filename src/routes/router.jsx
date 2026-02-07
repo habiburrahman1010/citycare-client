@@ -8,7 +8,7 @@ import DashLayout from "../Layouts/DashLayout";
 import CitizenHome from "../Pages/Dashboard/Citizen/CitizenHome";
 import CreateIssue from "../Pages/Dashboard/Citizen/CreateIssue";
 import MyIssues from "../Pages/Dashboard/Citizen/MyIssues";
-import IssueDetails from "../Pages/Dashboard/Citizen/IssueDetails";
+import IssueDetails from "../Pages/Shared/IssueDetails/IssueDetails";
 import CitizenProfile from "../Pages/Dashboard/Citizen/CitizenProfile";
 import PaymentSuccessfull from "../Pages/Dashboard/Citizen/PaymentSuccessfull";
 import PaymentCanceled from "../Pages/Dashboard/Citizen/PaymenCanceled";
@@ -19,6 +19,8 @@ import AllIssues from "../Pages/Dashboard/Admin/AllIssues";
 import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
 import ManageStaff from "../Pages/Dashboard/Admin/ManageStaff";
 import Payment from "../Pages/Dashboard/Admin/Payment";
+import AllIssuesPublic from "../Pages/All Issues/AllIssuesPublic";
+import BoostSuccess from "../Pages/Shared/IssueDetails/BoostSuccess";
 
 
 export const router = createBrowserRouter([
@@ -37,12 +39,25 @@ export const router = createBrowserRouter([
       {
         path: 'register',
         Component: Register
+      },
+      {
+        path: 'all-issues-public',
+        Component: AllIssuesPublic
+      },
+      {
+        path: 'issue-details/:id',
+        element: <PrivateRoute> <IssueDetails></IssueDetails></PrivateRoute>
+      },
+      {
+        path: 'issues/boost-success',
+        element: <PrivateRoute><BoostSuccess /></PrivateRoute>
       }
+
     ]
   },
   {
     path: '/dashboard',
-    element:<PrivateRoute><DashLayout></DashLayout></PrivateRoute> ,
+    element: <PrivateRoute><DashLayout></DashLayout></PrivateRoute>,
     children: [
       {
         index: true,
@@ -56,10 +71,7 @@ export const router = createBrowserRouter([
         path: 'my-issue/:email',
         element: <MyIssues></MyIssues>
       },
-      {
-        path: 'issue-details/:id',
-        element: <IssueDetails></IssueDetails>
-      },
+
       {
         path: 'citizen-profile',
         element: <CitizenProfile></CitizenProfile>
@@ -74,28 +86,28 @@ export const router = createBrowserRouter([
       },
       // ------------------------------------------------
       {
-        path:'admin-home',
-        element:<AdminHome></AdminHome>
+        path: 'admin-home',
+        element: <AdminHome></AdminHome>
       },
       {
-        path:'admin-profile',
-        element:<AdminProfile></AdminProfile>
+        path: 'admin-profile',
+        element: <AdminProfile></AdminProfile>
       },
       {
-        path:'admin-all-issue',
-        element:<AllIssues></AllIssues>
+        path: 'admin-all-issue',
+        element: <AllIssues></AllIssues>
       },
       {
-        path:'mamage-users',
-        element:<ManageUsers></ManageUsers>
+        path: 'mamage-users',
+        element: <ManageUsers></ManageUsers>
       },
       {
-        path:'manage-staff',
-        element:<ManageStaff></ManageStaff>
+        path: 'manage-staff',
+        element: <ManageStaff></ManageStaff>
       },
       {
-        path:'payment',
-        element:<Payment></Payment>
+        path: 'payment',
+        element: <Payment></Payment>
       }
 
     ]

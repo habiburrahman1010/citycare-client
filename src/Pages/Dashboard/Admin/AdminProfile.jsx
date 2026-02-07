@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import UseAuth from "../../../hooks/UseAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
-const Profile = () => {
+const AdminProfile = () => {
   const { user } = UseAuth();
   const axiosSecure = useAxiosSecure();
 
@@ -50,4 +50,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default AdminProfile;

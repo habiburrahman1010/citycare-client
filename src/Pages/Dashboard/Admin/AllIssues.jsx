@@ -11,7 +11,7 @@ const AllIssues = () => {
   const { data: issues = [], refetch: refetchIssues } = useQuery({
     queryKey: ["issues"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/issues");
+      const res = await axiosSecure.get("/issues/all");
       return res.data;
     },
   });
@@ -25,9 +25,16 @@ const AllIssues = () => {
   });
 
   const handleAssign = async () => {
-    if (!selectedStaff) return;
-    await axiosSecure.patch(`/issues/assign/${assigningIssue._id}`, { staffId: selectedStaff });
-    Swal.fire("Assigned!", `Issue assigned to staff successfully.`, "success");
+    if (!selectedStaff) {
+      return Swal.fire("Select staff first");
+    }
+
+    await axiosSecure.post(`/issue/assign/${assigningIssue._id}`, {
+      staffId: selectedStaff,
+    });
+
+    Swal.fire("Assigned!", "Staff assigned successfully", "success");
+
     setAssigningIssue(null);
     setSelectedStaff("");
     refetchIssues();
@@ -35,18 +42,21 @@ const AllIssues = () => {
 
   const handleReject = async (issue) => {
     const result = await Swal.fire({
-      title: `Reject issue "${issue.title}"?`,
+      title: `Reject "${issue.title}"?`,
       text: "This action cannot be undone",
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Reject",
     });
+
     if (result.isConfirmed) {
-      await axiosSecure.patch(`/issues/reject/${issue._id}`);
-      Swal.fire("Rejected!", "Issue rejected successfully.", "success");
+      await axiosSecure.post(`/issue/reject/${issue._id}`);
+
+      Swal.fire("Rejected!", "Issue rejected successfully", "success");
       refetchIssues();
     }
   };
+
 
   return (
     <div className="p-6">
@@ -71,7 +81,10 @@ const AllIssues = () => {
               <td>{issue.category}</td>
               <td>{issue.status}</td>
               <td>{issue.priority}</td>
-              <td>{issue.assignedStaff?.name || "Unassigned"}</td>
+              <td>
+                {staffList.find(s => s._id === issue.assignedStaff)?.name || "Unassigned"}
+              </td>
+
               <td className="flex gap-2">
                 {!issue.assignedStaff && (
                   <button className="btn btn-sm btn-primary" onClick={() => setAssigningIssue(issue)}>
@@ -102,7 +115,7 @@ const AllIssues = () => {
               <option value="">Select Staff</option>
               {staffList.map((staff) => (
                 <option key={staff._id} value={staff._id}>
-                  {staff.name} 
+                  {staff.name}
                 </option>
               ))}
             </select>
