@@ -82,8 +82,11 @@ const AllIssues = () => {
               <td>{issue.status}</td>
               <td>{issue.priority}</td>
               <td>
-                {staffList.find(s => s._id === issue.assignedStaff)?.name || "Unassigned"}
+                {issue.assignedStaff
+                  ? staffList.find(s => s._id.toString() === issue.assignedStaff._id.toString())?.name
+                  : "Unassigned"}
               </td>
+
 
               <td className="flex gap-2">
                 {!issue.assignedStaff && (

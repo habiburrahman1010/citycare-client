@@ -154,7 +154,7 @@ const DashLayout = () => {
                                             className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center gap-2"
                                             data-tip="manage Users"
                                         >
-                                           <FiUsers size={24} />
+                                            <FiUsers size={24} />
                                             <span className="is-drawer-close:hidden">Manage Users</span>
                                         </Link>
                                     </li>
@@ -166,7 +166,7 @@ const DashLayout = () => {
                                             className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center gap-2"
                                             data-tip="manage staff"
                                         >
-                                           <FiUsers size={24} />
+                                            <FiUsers size={24} />
                                             <span className="is-drawer-close:hidden">Manage staff</span>
                                         </Link>
                                     </li>
@@ -177,7 +177,7 @@ const DashLayout = () => {
                                             className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center gap-2"
                                             data-tip="All issue"
                                         >
-                                           <FiUsers size={24} />
+                                            <FiUsers size={24} />
                                             <span className="is-drawer-close:hidden">All Issue</span>
                                         </Link>
                                     </li>
@@ -194,6 +194,54 @@ const DashLayout = () => {
                                         </Link>
                                     </li>
 
+                                </>
+                            }
+
+
+
+                            {
+                                role === "staff" && <>
+
+
+                                    {/*staff Home*/}
+                                    <li>
+                                        <Link
+                                            to={'/dashboard/staff-home'}
+
+                                            className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center gap-2"
+                                            data-tip="Homepage"
+                                        >
+                                            <FaHome className="text-lg" />
+                                            <span className="is-drawer-close:hidden">staff Home</span>
+                                        </Link>
+                                    </li>
+
+
+
+
+                                    {/*assigned  issue*/}
+                                    <li>
+                                        <Link
+                                            to={'/dashboard/assigned-issue'}
+                                            className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center gap-2"
+                                            data-tip="Assigned issue"
+                                        >
+                                            <FiUsers size={24} />
+                                            <span className="is-drawer-close:hidden">Assigned Issue</span>
+                                        </Link>
+                                    </li>
+
+                                    {/*Staff profile */}
+                                    <li>
+                                        <Link
+                                            to={'/dashboard/staff-profile'}
+                                            className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center gap-2"
+                                            data-tip="Staff Profile"
+                                        >
+                                            <FaUserCircle size={26} />
+                                            <span className="is-drawer-close:hidden">Staff Profile</span>
+                                        </Link>
+                                    </li>
                                 </>
                             }
 

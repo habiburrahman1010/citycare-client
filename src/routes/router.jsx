@@ -21,6 +21,9 @@ import ManageStaff from "../Pages/Dashboard/Admin/ManageStaff";
 import Payment from "../Pages/Dashboard/Admin/Payment";
 import AllIssuesPublic from "../Pages/All Issues/AllIssuesPublic";
 import BoostSuccess from "../Pages/Shared/IssueDetails/BoostSuccess";
+import StaffHome from "../Pages/Dashboard/Staff/StaffHome";
+import AssignedIssue from "../Pages/Dashboard/Staff/AssignedIssue";
+import StaffProfile from "../Pages/Dashboard/Staff/StaffProfile";
 
 
 export const router = createBrowserRouter([
@@ -108,6 +111,20 @@ export const router = createBrowserRouter([
       {
         path: 'payment',
         element: <Payment></Payment>
+      },
+      // ---------------------------------------------
+
+      {
+        path:'staff-home',
+        element:<StaffHome></StaffHome>
+      },
+      {
+        path:'assigned-issue',
+        element:<AssignedIssue></AssignedIssue>
+      },
+      {
+        path:'staff-profile',
+        element:<StaffProfile></StaffProfile>
       }
 
     ]
