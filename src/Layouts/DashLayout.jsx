@@ -182,6 +182,18 @@ const DashLayout = () => {
                                         </Link>
                                     </li>
 
+                                    {/*payments*/}
+                                    <li>
+                                        <Link
+                                            to={'/dashboard/payment'}
+                                            className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center gap-2"
+                                            data-tip="payments"
+                                        >
+                                            <FiUsers size={24} />
+                                            <span className="is-drawer-close:hidden">payments</span>
+                                        </Link>
+                                    </li>
+
                                     {/*Admin profile */}
                                     <li>
                                         <Link

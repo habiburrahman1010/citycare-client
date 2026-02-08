@@ -42,7 +42,7 @@ const MyIssues = () => {
           .then((res) => {
             if (res.data.deletedCount === 1) {
               Swal.fire('Deleted!', 'Your issue has been deleted.', 'success');
-              refetch(); // refetch issues after delete
+              refetch(); 
             } else {
               Swal.fire('Error', 'Issue not found or already deleted', 'error');
             }

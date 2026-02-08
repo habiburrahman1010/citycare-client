@@ -15,11 +15,11 @@ const BoostSuccess = () => {
             axiosSecure.patch("/issues/boost-success", { sessionId })
                 .then(() => {
                     Swal.fire("Boost Successful!", "Your issue priority is now high.", "success");
-                    navigate(`/issues/${issueId}`);
+                    navigate(`/all-issues-public`);
                 })
                 .catch(() => {
                     Swal.fire("Error", "Failed to update boost.", "error");
-                    navigate(`/issues/${issueId}`);
+                    navigate(`/all-issues-public`);
                 });
         }
     }, [sessionId, issueId]);

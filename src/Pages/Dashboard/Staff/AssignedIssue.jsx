@@ -9,7 +9,7 @@ const AssignedIssue = () => {
     const queryClient = useQueryClient();
     const [selectedStatus, setSelectedStatus] = useState({});
 
-    // -------------------- Fetch assigned issues --------------------
+    
     const { data: issues = [], isLoading } = useQuery({
         queryKey: ["staffIssues", user?.email],
         enabled: !!user?.email,
@@ -19,17 +19,17 @@ const AssignedIssue = () => {
         },
     });
 
-    // -------------------- Status mutation --------------------
+    
     const mutation = useMutation({
         mutationFn: ({ id, status }) =>
             axiosSecure.patch(`/staff/issues/status/${id}`, {
                 status,
-                staffId: user._id, // For timeline
+                staffId: user._id, 
             }),
         onSuccess: () => queryClient.invalidateQueries(["staffIssues", user.email]),
     });
 
-    // -------------------- Status flow mapping --------------------
+  
     const flow = {
         pending: ["assigned"],
         assigned: ["in-progress"],

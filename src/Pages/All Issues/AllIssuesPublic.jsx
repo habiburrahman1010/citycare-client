@@ -4,6 +4,7 @@ import UseAuth from "../../hooks/UseAuth";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import { useState } from "react";
+import { FaThumbsUp } from "react-icons/fa";
 
 const AllIssuesPublic = () => {
   const axiosSecure = useAxiosSecure();
@@ -39,7 +40,7 @@ const AllIssuesPublic = () => {
     }
   };
 
-  // ---------- FILTER + SEARCH ----------
+  
   const filteredIssues = issues.filter((issue) => {
     return (
       issue.title.toLowerCase().includes(search.toLowerCase()) &&
@@ -53,7 +54,7 @@ const AllIssuesPublic = () => {
     <div>
       <h2 className="text-4xl font-bold text-center mb-4">All Issues</h2>
 
-      {/* Search & Filters */}
+    
       <div className="flex flex-wrap gap-2 justify-center mb-6">
         <input
           placeholder="Search issue..."
@@ -104,7 +105,7 @@ const AllIssuesPublic = () => {
 
               <div className="flex justify-between items-center mt-2">
                 <button onClick={() => handleUpvote(issue)} className="btn btn-sm">
-                  👍 {issue.upvotes || 0}
+                  <FaThumbsUp /> {issue.upvotes || 0}
                 </button>
 
                 <button

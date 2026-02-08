@@ -1,6 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router';
 
 const IssueCard = ({ issue, onEdit, onDelete, onView }) => {
+
+  const navigate=useNavigate()
   return (
     <div className="card shadow-lg p-4 bg-base-100 relative">
       <img
@@ -32,7 +35,7 @@ const IssueCard = ({ issue, onEdit, onDelete, onView }) => {
           Delete
         </button>
         <button
-          onClick={() => onView(issue._id)}
+          onClick={() => navigate(`/issue-details/${issue._id}`)}
           className="btn btn-sm btn-primary"
         >
           View Details

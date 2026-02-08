@@ -4,6 +4,10 @@ import Swal from "sweetalert2";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import UseAuth from "../../../hooks/UseAuth";
+import { useState } from "react";
+
+import EditIssueModall from "./EditIssueModall";
+
 
 const IssueDetails = () => {
     const { id } = useParams();
@@ -11,8 +15,10 @@ const IssueDetails = () => {
     const { user } = UseAuth();
     const navigate = useNavigate();
     const queryClient = useQueryClient();
+    const [openEdit, setOpenEdit] = useState(false);
 
-    // -------------------- Fetch issue with React Query --------------------
+
+    
     const { data: issue, isLoading, isError } = useQuery({
         queryKey: ["issue", id],
         queryFn: async () => {
@@ -21,7 +27,15 @@ const IssueDetails = () => {
         },
     });
 
-    // -------------------- Actions --------------------
+
+
+
+    const handleUpdate = (updatedIssue) => {
+        queryClient.setQueryData(["issue", id], updatedIssue);
+        queryClient.invalidateQueries(["issues"]);
+    };
+
+   
     const handleDelete = () => {
         Swal.fire({
             title: "Are you sure?",
@@ -39,8 +53,8 @@ const IssueDetails = () => {
                                 "Your issue has been deleted.",
                                 "success"
                             );
-                            queryClient.invalidateQueries(["issues"]); 
-                            navigate("/"); 
+                            queryClient.invalidateQueries(["issues"]);
+                            navigate("/");
                         } else {
                             Swal.fire("Error", "Issue not found or already deleted", "error");
                         }
@@ -54,10 +68,10 @@ const IssueDetails = () => {
         try {
             const { data } = await axiosSecure.post('/issues/boost-checkout-session', {
                 email: user.email,
-                issueId: id,  
+                issueId: id,
             });
 
-           
+
             window.location.href = data.url;
         } catch (error) {
             console.error(error);
@@ -71,24 +85,24 @@ const IssueDetails = () => {
 
 
 
-    // -------------------- Render --------------------
+   
     if (isLoading) return <p className="text-center mt-10">Loading...</p>;
     if (isError || !issue) return <p className="text-center mt-10">Issue not found</p>;
 
     return (
         <div className="max-w-5xl mx-auto p-6">
-            {/* IMAGE */}
+           
             <img
                 src={issue.image}
                 alt={issue.title}
                 className="w-full h-96 object-cover rounded-xl shadow"
             />
 
-            {/* TITLE & DESCRIPTION */}
+           
             <h2 className="text-4xl font-bold mt-5">{issue.title}</h2>
             <p className="mt-3 text-gray-600">{issue.description}</p>
 
-            {/* BADGES */}
+         
             <div className="flex gap-3 mt-4">
                 <span className="badge badge-info">{issue.status}</span>
                 <span
@@ -102,11 +116,17 @@ const IssueDetails = () => {
             <p className="mt-3">📍 {issue.location}</p>
             <p className="mt-1">👍 {issue.upvotes || 0}</p>
 
-            {/* ACTIONS */}
+           
             <div className="flex gap-3 mt-5">
                 {user?.email === issue.userEmail && issue.status === "pending" && (
-                    <button className="btn btn-warning">Edit</button>
+                    <button
+                        onClick={() => setOpenEdit(true)}
+                        className="btn btn-warning"
+                    >
+                        Edit
+                    </button>
                 )}
+
 
                 {user?.email === issue.userEmail && (
                     <button onClick={handleDelete} className="btn btn-error">
@@ -121,7 +141,7 @@ const IssueDetails = () => {
                 )}
             </div>
 
-            {/* STAFF */}
+           
             {issue.assignedStaff && (
                 <div className="mt-6 p-4 border rounded-xl bg-base-200">
                     <h3 className="font-bold text-lg">Assigned Staff</h3>
@@ -130,7 +150,7 @@ const IssueDetails = () => {
                 </div>
             )}
 
-            {/* TIMELINE */}
+            
             <div className="mt-10">
                 <h3 className="text-2xl font-bold mb-4">Issue Timeline</h3>
 
@@ -150,6 +170,16 @@ const IssueDetails = () => {
                     ))}
                 </ul>
             </div>
+
+
+            {openEdit && (
+                <EditIssueModall
+                    issue={issue}
+                    onClose={() => setOpenEdit(false)}
+                    onUpdate={handleUpdate}
+                />
+            )}
+
         </div>
     );
 };
