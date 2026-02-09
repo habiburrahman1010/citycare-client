@@ -24,6 +24,7 @@ import BoostSuccess from "../Pages/Shared/IssueDetails/BoostSuccess";
 import StaffHome from "../Pages/Dashboard/Staff/StaffHome";
 import AssignedIssue from "../Pages/Dashboard/Staff/AssignedIssue";
 import StaffProfile from "../Pages/Dashboard/Staff/StaffProfile";
+import NotFound from "../Pages/Shared/Not Found/NotFound";
 
 
 export const router = createBrowserRouter([
@@ -54,7 +55,11 @@ export const router = createBrowserRouter([
       {
         path: 'issues/boost-success',
         element: <PrivateRoute><BoostSuccess /></PrivateRoute>
-      }
+      },
+      {
+        path: "*",
+        element: <NotFound />
+      },
 
     ]
   },
@@ -115,16 +120,16 @@ export const router = createBrowserRouter([
       // ---------------------------------------------
 
       {
-        path:'staff-home',
-        element:<StaffHome></StaffHome>
+        path: 'staff-home',
+        element: <StaffHome></StaffHome>
       },
       {
-        path:'assigned-issue',
-        element:<AssignedIssue></AssignedIssue>
+        path: 'assigned-issue',
+        element: <AssignedIssue></AssignedIssue>
       },
       {
-        path:'staff-profile',
-        element:<StaffProfile></StaffProfile>
+        path: 'staff-profile',
+        element: <StaffProfile></StaffProfile>
       }
 
     ]
