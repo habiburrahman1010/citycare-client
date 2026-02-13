@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router';
-import { FaHome, FaCog, FaBars, FaExclamationTriangle, FaUserCircle } from "react-icons/fa";
+import { FaHome, FaCog, FaBars, FaExclamationTriangle, FaUserCircle, FaMoneyBillWave, FaTasks } from "react-icons/fa";
 import { FiPlusCircle, FiUsers } from 'react-icons/fi';
 import { MdOutlineInfo } from 'react-icons/md';
 import UseAuth from '../hooks/UseAuth';
@@ -21,7 +21,7 @@ const DashLayout = () => {
         },
     });
 
-    if (isLoading) return <p className="p-6">Loading...</p>;
+    if (isLoading) return <p className="p-6"><span className="loading loading-spinner loading-xl"></span></p>;
 
     const role = dbUser?.role;
 
@@ -74,7 +74,7 @@ const DashLayout = () => {
                                     {/*Dashboard Home*/}
                                     <li>
                                         <Link
-                                            to={'/dashboard'}
+                                            to={'/dashboard/citizen-home'}
 
                                             className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center gap-2"
                                             data-tip="Homepage"
@@ -177,7 +177,7 @@ const DashLayout = () => {
                                             className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center gap-2"
                                             data-tip="All issue"
                                         >
-                                            <FiUsers size={24} />
+                                             <FaTasks size={20} />
                                             <span className="is-drawer-close:hidden">All Issue</span>
                                         </Link>
                                     </li>
@@ -189,7 +189,7 @@ const DashLayout = () => {
                                             className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center gap-2"
                                             data-tip="payments"
                                         >
-                                            <FiUsers size={24} />
+                                              <FaMoneyBillWave size={20} />
                                             <span className="is-drawer-close:hidden">payments</span>
                                         </Link>
                                     </li>

@@ -32,7 +32,7 @@ const AdminHome = () => {
 
   
   const totalIssues = issues.length;
-  const resolvedIssues = issues.filter((i) => i.status === "resolved").length;
+  const resolvedIssues = issues.filter((i) => i.status === "closed").length;
   const pendingIssues = issues.filter((i) => i.status === "pending").length;
   const rejectedIssues = issues.filter((i) => i.status === "rejected").length;
 

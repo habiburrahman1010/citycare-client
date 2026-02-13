@@ -10,6 +10,7 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
+import Loading from "../../Shared/Loading/Loading";
 
 const StaffHome = () => {
   const axiosSecure = useAxiosSecure();
@@ -25,7 +26,7 @@ const StaffHome = () => {
     },
   });
 
-  if (isLoading) return <p className="text-center mt-6">Loading dashboard...</p>;
+  if (isLoading) return <Loading></Loading>
 
   // -------- Stats --------
   const totalAssigned = issues.length;

@@ -54,8 +54,8 @@ const MyIssues = () => {
 
   const handleViewDetails = (id) => navigate(`/dashboard/issue-details/${id}`);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error loading issues.</p>;
+  if (isLoading) return <p><span className="loading loading-spinner loading-xl"></span></p>;
+  if (isError) return <p><span className="loading loading-spinner loading-xl"></span></p>;
   if (!issues.length) return <p>You have not created any issues</p>;
 
   return (

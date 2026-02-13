@@ -32,7 +32,7 @@ const CitizenHome = () => {
    
 
     if (issueLoading ) {
-        return <p className="text-center mt-6">Loading dashboard...</p>;
+        return <p className="text-center mt-6"><span className="loading loading-spinner loading-xl"></span></p>;
     }
 
     // -------- Stats --------

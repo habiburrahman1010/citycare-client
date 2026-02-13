@@ -25,6 +25,9 @@ import StaffHome from "../Pages/Dashboard/Staff/StaffHome";
 import AssignedIssue from "../Pages/Dashboard/Staff/AssignedIssue";
 import StaffProfile from "../Pages/Dashboard/Staff/StaffProfile";
 import NotFound from "../Pages/Shared/Not Found/NotFound";
+import DashboardHome from "../Pages/Dashboard/Citizen/DashboardHome";
+
+
 
 
 export const router = createBrowserRouter([
@@ -56,10 +59,7 @@ export const router = createBrowserRouter([
         path: 'issues/boost-success',
         element: <PrivateRoute><BoostSuccess /></PrivateRoute>
       },
-      {
-        path: "*",
-        element: <NotFound />
-      },
+
 
     ]
   },
@@ -68,7 +68,11 @@ export const router = createBrowserRouter([
     element: <PrivateRoute><DashLayout></DashLayout></PrivateRoute>,
     children: [
       {
-        index: true,
+        index:true,
+        element:<DashboardHome></DashboardHome>
+      },
+      {
+        path:'citizen-home',
         element: <CitizenHome></CitizenHome>
       },
       {
@@ -133,6 +137,10 @@ export const router = createBrowserRouter([
       }
 
     ]
-  }
+  },
+  {
+    path: "*",
+    element: <NotFound></NotFound>
+  },
 ]);
 

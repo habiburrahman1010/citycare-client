@@ -23,14 +23,31 @@ const ManageUsers = () => {
       confirmButtonText: "Yes",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await axiosSecure.patch(`/users/block/${user._id}`, {
-          isBlocked: !user.isBlocked,
-        });
+        try {
+          const res = await axiosSecure.patch(
+            `/users/block/${user._id}`,
+            {
+              isBlocked: !user.isBlocked,
+            }
+          );
 
-        refetch();
+          if (res.data.modifiedCount > 0) {
+            Swal.fire(
+              "Success!",
+              user.isBlocked
+                ? "User Unblocked Successfully"
+                : "User Blocked Successfully",
+              "success"
+            );
+            refetch();
+          }
+        } catch (error) {
+          Swal.fire("Error!", "Something went wrong", "error");
+        }
       }
     });
   };
+
 
   if (isLoading) {
     return <span className="loading loading-spinner loading-lg"></span>;
@@ -69,9 +86,8 @@ const ManageUsers = () => {
               <td>
                 <button
                   onClick={() => handleBlockToggle(user)}
-                  className={`btn btn-sm ${
-                    user.isBlocked ? "btn-success" : "btn-error"
-                  }`}
+                  className={`btn btn-sm ${user.isBlocked ? "btn-success" : "btn-error"
+                    }`}
                 >
                   {user.isBlocked ? "Unblock" : "Block"}
                 </button>

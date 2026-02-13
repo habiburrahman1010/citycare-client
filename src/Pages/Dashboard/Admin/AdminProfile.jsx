@@ -4,6 +4,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import axios from "axios";
+import Loading from "../../Shared/Loading/Loading";
 
 const AdminProfile = () => {
   const { user, refetchUser, loading } = UseAuth();
@@ -32,7 +33,7 @@ const AdminProfile = () => {
   }, [profile]);
 
   if (loading || isLoading || !ready) {
-    return <p className="text-center mt-6">Loading profile...</p>;
+    return <p className="text-center mt-6"><Loading></Loading></p>;
   }
 
   const handleUpdate = async (e) => {

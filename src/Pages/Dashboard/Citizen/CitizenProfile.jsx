@@ -23,8 +23,8 @@ const CitizenProfile = () => {
         enabled: !!user?.email,
     });
 
-    if (isLoading) return <p>Loading profile...</p>;
-    if (isError) return <p>Error loading profile.</p>;
+    if (isLoading) return <p><span className="loading loading-spinner loading-xl"></span></p>;
+    if (isError) return <p><span className="loading loading-spinner loading-xl"></span></p>;
     if (!profile) return <p>No profile found.</p>;
 
     const handleUpdate = async (e) => {

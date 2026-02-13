@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Lottie from "lottie-react";
-import notFoundAnim from "../assets/lottie/404.json";
+import notFoundAnim from "../../../assets/error.json";
 
 const NotFound = () => {
   const navigate = useNavigate();

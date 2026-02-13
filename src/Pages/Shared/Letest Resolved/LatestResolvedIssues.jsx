@@ -16,7 +16,7 @@ const LatestResolvedIssues = () => {
   });
 
   if (isLoading) {
-    return <p className="text-center mt-10">Loading resolved issues...</p>;
+    return <p className="text-center mt-10"><span className="loading loading-spinner loading-xl"></span></p>;
   }
 
   // ✅ filter + sort + limit

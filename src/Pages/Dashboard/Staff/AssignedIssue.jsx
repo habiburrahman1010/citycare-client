@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import UseAuth from "../../../hooks/UseAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useState } from "react";
+import Loading from "../../Shared/Loading/Loading";
 
 const AssignedIssue = () => {
     const { user } = UseAuth();
@@ -9,38 +10,40 @@ const AssignedIssue = () => {
     const queryClient = useQueryClient();
     const [selectedStatus, setSelectedStatus] = useState({});
 
-    
+
     const { data: issues = [], isLoading } = useQuery({
         queryKey: ["staffIssues", user?.email],
         enabled: !!user?.email,
         queryFn: async () => {
-            const res = await axiosSecure.get(`/staff/issues/${user.email}`);
+            const res = await axiosSecure.get(`/staff/issues/${user?.email}`);
             return res.data;
         },
     });
 
-    
+
+
+
     const mutation = useMutation({
-        mutationFn: ({ id, status }) =>
-            axiosSecure.patch(`/staff/issues/status/${id}`, {
-                status,
-                staffId: user._id, 
+        mutationFn: ({ id }) =>
+            axiosSecure.patch(`/staff/issues/status/${id}`),
+        onSuccess: () =>
+            queryClient.invalidateQueries({
+                queryKey: ["staffIssues", user?.email],
             }),
-        onSuccess: () => queryClient.invalidateQueries(["staffIssues", user.email]),
     });
 
-  
+
     const flow = {
         pending: ["assigned"],
         assigned: ["in-progress"],
         "in-progress": ["working"],
         working: ["resolved"],
         resolved: ["closed"],
-        closed: [], 
-        null: ["assigned"], 
+        closed: [],
+        null: ["assigned"],
     };
 
-    if (isLoading) return <p className="p-6">Loading assigned issues...</p>;
+    if (isLoading) return <Loading></Loading>
 
     return (
         <div className="p-6">
@@ -58,7 +61,7 @@ const AssignedIssue = () => {
                 </thead>
                 <tbody>
                     {issues.map((issue) => {
-                        const statusKey = issue.status ?? "null"; 
+                        const statusKey = issue.status ?? "null";
                         const availableStatuses = flow[statusKey] || [];
 
                         return (

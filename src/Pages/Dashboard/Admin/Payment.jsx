@@ -17,7 +17,7 @@ const Payments = () => {
   
   const highPriorityIssues = issues.filter((p) => p.priority === "high");
 
-  if (isLoading) return <p className="text-center mt-6 text-lg">Loading...</p>;
+  if (isLoading) return <p className="text-center mt-6 text-lg"><span className="loading loading-spinner loading-xl"></span></p>;
   if (isError)
     return (
       <p className="text-center mt-6 text-red-500 text-lg">

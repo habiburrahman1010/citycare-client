@@ -86,7 +86,7 @@ const IssueDetails = () => {
 
 
    
-    if (isLoading) return <p className="text-center mt-10">Loading...</p>;
+    if (isLoading) return <p className="text-center mt-10"><span className="loading loading-spinner loading-xl"></span></p>;
     if (isError || !issue) return <p className="text-center mt-10">Issue not found</p>;
 
     return (
