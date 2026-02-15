@@ -15,32 +15,43 @@ const AllIssuesPublic = () => {
   const [filterStatus, setFilterStatus] = useState("");
   const [filterPriority, setFilterPriority] = useState("");
   const [filterCategory, setFilterCategory] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const { data: issues = [], refetch } = useQuery({
-    queryKey: ["all-issues"],
+  const limit = 6;
+
+  const { data, refetch } = useQuery({
+    queryKey: ["all-issues", currentPage],
     queryFn: async () => {
-      const res = await axiosSecure.get("/public/issues");
+      const res = await axiosSecure.get(
+        `/public/issues?page=${currentPage}&limit=${limit}`
+      );
       return res.data;
     },
+    keepPreviousData: true,
   });
 
+  const issues = Array.isArray(data?.issues)
+    ? data.issues
+    : Array.isArray(data)
+      ? data
+      : [];
+
+  const totalPages = data?.totalPages || 1;
+
   const handleUpvote = async (issue) => {
-    if (!user) {
-      return navigate("/login");
-    }
+    if (!user) return navigate("/login");
 
     try {
       await axiosSecure.patch(`/issues/upvote/${issue._id}`, {
         userEmail: user.email,
       });
-
       refetch();
     } catch (err) {
       Swal.fire("Oops!", err.response?.data?.message || "Failed", "error");
     }
   };
 
-  
+
   const filteredIssues = issues.filter((issue) => {
     return (
       issue.title.toLowerCase().includes(search.toLowerCase()) &&
@@ -54,7 +65,7 @@ const AllIssuesPublic = () => {
     <div>
       <h2 className="text-4xl font-bold text-center mb-4">All Issues</h2>
 
-    
+
       <div className="flex flex-wrap gap-2 justify-center mb-6">
         <input
           placeholder="Search issue..."
@@ -63,26 +74,36 @@ const AllIssuesPublic = () => {
           onChange={(e) => setSearch(e.target.value)}
         />
 
-        <select className="select select-bordered" onChange={(e) => setFilterCategory(e.target.value)}>
+        <select
+          className="select select-bordered"
+          onChange={(e) => setFilterCategory(e.target.value)}
+        >
           <option value="">Category</option>
           <option value="Road">Road</option>
           <option value="Water">Water</option>
           <option value="Electricity">Electricity</option>
         </select>
 
-        <select className="select select-bordered" onChange={(e) => setFilterStatus(e.target.value)}>
+        <select
+          className="select select-bordered"
+          onChange={(e) => setFilterStatus(e.target.value)}
+        >
           <option value="">Status</option>
           <option value="pending">Pending</option>
           <option value="assigned">Assigned</option>
           <option value="rejected">Rejected</option>
         </select>
 
-        <select className="select select-bordered" onChange={(e) => setFilterPriority(e.target.value)}>
+        <select
+          className="select select-bordered"
+          onChange={(e) => setFilterPriority(e.target.value)}
+        >
           <option value="">Priority</option>
           <option value="high">High</option>
           <option value="normal">Normal</option>
         </select>
       </div>
+
 
       <div className="p-6 grid md:grid-cols-3 gap-4">
         {filteredIssues.map((issue) => (
@@ -98,18 +119,28 @@ const AllIssuesPublic = () => {
 
               <div className="flex gap-2">
                 <span className="badge badge-info">{issue.status}</span>
-                <span className={`badge ${issue.priority === "high" ? "badge-error" : "badge-success"}`}>
+                <span
+                  className={`badge ${issue.priority === "high"
+                    ? "badge-error"
+                    : "badge-success"
+                    }`}
+                >
                   {issue.priority}
                 </span>
               </div>
 
               <div className="flex justify-between items-center mt-2">
-                <button onClick={() => handleUpvote(issue)} className="btn btn-sm">
+                <button
+                  onClick={() => handleUpvote(issue)}
+                  className="btn btn-sm"
+                >
                   <FaThumbsUp /> {issue.upvotes || 0}
                 </button>
 
                 <button
-                  onClick={() => navigate(`/issue-details/${issue._id}`)}
+                  onClick={() =>
+                    navigate(`/issue-details/${issue._id}`)
+                  }
                   className="btn btn-sm btn-primary"
                 >
                   View Details
@@ -119,6 +150,38 @@ const AllIssuesPublic = () => {
           </div>
         ))}
       </div>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="flex justify-center mt-6 gap-2">
+          <button
+            className="btn btn-sm"
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage(currentPage - 1)}
+          >
+            Prev
+          </button>
+
+          {[...Array(totalPages).keys()].map((num) => (
+            <button
+              key={num}
+              className={`btn btn-sm ${currentPage === num + 1 ? "btn-primary" : ""
+                }`}
+              onClick={() => setCurrentPage(num + 1)}
+            >
+              {num + 1}
+            </button>
+          ))}
+
+          <button
+            className="btn btn-sm"
+            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage(currentPage + 1)}
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 };

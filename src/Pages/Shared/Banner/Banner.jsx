@@ -1,5 +1,6 @@
 import React from "react";
 
+
 const Banner = () => {
   return (
     <div className="bg-base-200">
@@ -33,17 +34,14 @@ const Banner = () => {
           {/* Image */}
           <div className="relative">
             <img
-              src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6"
+              src="https://i.ibb.co.com/0p6fpBR1/photo-1413882353314-73389f63b6fd.jpg"
               className="rounded-2xl shadow-2xl w-full object-cover"
               alt="City Care"
             />
 
             <div className="absolute inset-0 bg-blue-600/10 rounded-2xl"></div>
 
-            <div className="absolute -bottom-6 left-6 bg-base-100 p-4 rounded-xl shadow-lg">
-              <p className="font-semibold text-blue-600">🏙 CityCare Platform</p>
-              <p className="text-sm text-gray-500">Connecting citizens & authorities</p>
-            </div>
+            
           </div>
 
         </div>

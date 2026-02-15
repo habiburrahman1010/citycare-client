@@ -37,7 +37,7 @@ const Login = () => {
             <div className="card bg-base-100 w-full mx-auto max-w-sm shrink-0 shadow-2xl mt-24">
 
                 <h4 className='text-4xl font-extrabold px-8'>Welcome Back</h4>
-                <p className='px-8'>Login with ZapShift</p>
+                
                 <form onSubmit={handleSubmit(handleLogin)} className="card-body">
                     <fieldset className="fieldset">
 

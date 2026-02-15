@@ -26,6 +26,8 @@ import AssignedIssue from "../Pages/Dashboard/Staff/AssignedIssue";
 import StaffProfile from "../Pages/Dashboard/Staff/StaffProfile";
 import NotFound from "../Pages/Shared/Not Found/NotFound";
 import DashboardHome from "../Pages/Dashboard/Citizen/DashboardHome";
+import About from "../Pages/Shared/About/About";
+import Review from "../Pages/Shared/Review/Review";
 
 
 
@@ -59,6 +61,14 @@ export const router = createBrowserRouter([
         path: 'issues/boost-success',
         element: <PrivateRoute><BoostSuccess /></PrivateRoute>
       },
+      {
+        path:'about',
+        element:<About></About>
+      },
+      {
+        path:'review',
+        element:<Review></Review>
+      }
 
 
     ]

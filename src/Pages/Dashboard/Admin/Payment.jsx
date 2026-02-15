@@ -5,16 +5,16 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 const Payments = () => {
   const axiosSecure = useAxiosSecure();
 
-  
-  const { data: issues = [], isLoading, isError } = useQuery({
+
+  const { data: issues = [] ,isLoading, isError} = useQuery({
     queryKey: ["issues"],
     queryFn: async () => {
       const res = await axiosSecure.get("/public/issues");
-      return res.data;
+      return Array.isArray(res.data?.issues) ? res.data.issues : [];
     },
   });
 
-  
+
   const highPriorityIssues = issues.filter((p) => p.priority === "high");
 
   if (isLoading) return <p className="text-center mt-6 text-lg"><span className="loading loading-spinner loading-xl"></span></p>;
@@ -37,7 +37,7 @@ const Payments = () => {
         Paid Issues
       </h2>
 
-      
+
       <div className="overflow-x-auto">
         <table className="table table-zebra w-full min-w-[500px] md:min-w-[650px]">
           <thead className="bg-gray-100">
@@ -66,13 +66,12 @@ const Payments = () => {
                 </td>
                 <td>
                   <span
-                    className={`badge text-xs md:text-sm ${
-                      p.status === "resolved" || p.status === "closed"
+                    className={`badge text-xs md:text-sm ${p.status === "resolved" || p.status === "closed"
                         ? "badge-success"
                         : p.status === "pending"
-                        ? "badge-warning"
-                        : "badge-secondary"
-                    }`}
+                          ? "badge-warning"
+                          : "badge-secondary"
+                      }`}
                   >
                     {p.status}
                   </span>
@@ -86,7 +85,7 @@ const Payments = () => {
         </table>
       </div>
 
-      
+
       {highPriorityIssues.length === 0 && (
         <p className="text-center mt-4 text-gray-500 text-sm md:text-base">
           No high priority issues to display.

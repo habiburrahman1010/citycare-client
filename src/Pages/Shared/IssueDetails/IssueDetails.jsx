@@ -7,6 +7,8 @@ import UseAuth from "../../../hooks/UseAuth";
 import { useState } from "react";
 
 import EditIssueModall from "./EditIssueModall";
+import { FaLocationDot } from "react-icons/fa6";
+import { FaThumbsUp } from "react-icons/fa";
 
 
 const IssueDetails = () => {
@@ -18,7 +20,7 @@ const IssueDetails = () => {
     const [openEdit, setOpenEdit] = useState(false);
 
 
-    
+
     const { data: issue, isLoading, isError } = useQuery({
         queryKey: ["issue", id],
         queryFn: async () => {
@@ -35,7 +37,7 @@ const IssueDetails = () => {
         queryClient.invalidateQueries(["issues"]);
     };
 
-   
+
     const handleDelete = () => {
         Swal.fire({
             title: "Are you sure?",
@@ -85,24 +87,24 @@ const IssueDetails = () => {
 
 
 
-   
+
     if (isLoading) return <p className="text-center mt-10"><span className="loading loading-spinner loading-xl"></span></p>;
     if (isError || !issue) return <p className="text-center mt-10">Issue not found</p>;
 
     return (
         <div className="max-w-5xl mx-auto p-6">
-           
+
             <img
                 src={issue.image}
                 alt={issue.title}
                 className="w-full h-96 object-cover rounded-xl shadow"
             />
 
-           
+
             <h2 className="text-4xl font-bold mt-5">{issue.title}</h2>
             <p className="mt-3 text-gray-600">{issue.description}</p>
 
-         
+
             <div className="flex gap-3 mt-4">
                 <span className="badge badge-info">{issue.status}</span>
                 <span
@@ -113,10 +115,11 @@ const IssueDetails = () => {
                 <span className="badge badge-outline">{issue.category}</span>
             </div>
 
-            <p className="mt-3">📍 {issue.location}</p>
-            <p className="mt-1">👍 {issue.upvotes || 0}</p>
+            <p className="mt-3 items-end flex gap-2"> <FaLocationDot /> {issue.location}</p>
+            <p className="mt-1 items-center flex gap-2"><FaThumbsUp />
+                {issue.upvotes || 0}</p>
 
-           
+
             <div className="flex gap-3 mt-5">
                 {user?.email === issue.userEmail && issue.status === "pending" && (
                     <button
@@ -141,7 +144,7 @@ const IssueDetails = () => {
                 )}
             </div>
 
-           
+
             {issue.assignedStaff && (
                 <div className="mt-6 p-4 border rounded-xl bg-base-200">
                     <h3 className="font-bold text-lg">Assigned Staff</h3>
@@ -150,7 +153,7 @@ const IssueDetails = () => {
                 </div>
             )}
 
-            
+
             <div className="mt-10">
                 <h3 className="text-2xl font-bold mb-4">Issue Timeline</h3>
 

@@ -3,7 +3,7 @@ import axios from "axios";
 import UseAuth from "./UseAuth";
 
 const axiosSecure = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://citycare-server-chi.vercel.app",
 });
 
 const useAxiosSecure = () => {
@@ -13,9 +13,9 @@ const useAxiosSecure = () => {
     const reqInterceptor = axiosSecure.interceptors.request.use(
       async (config) => {
         if (user) {
-          const token = await user.getIdToken(); 
+          const token = await user.getIdToken();
           if (token) {
-            config.headers.authorization = `Bearer ${token}`; 
+            config.headers.authorization = `Bearer ${token}`;
           }
         }
         return config;

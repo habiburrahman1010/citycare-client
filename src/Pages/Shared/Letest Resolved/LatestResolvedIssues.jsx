@@ -1,28 +1,41 @@
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { FaLocationDot } from "react-icons/fa6";
 
 
 const LatestResolvedIssues = () => {
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
 
-  const { data: issues = [], isLoading } = useQuery({
+  // ✅ Fetch data
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["latestResolved"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/public/issues");
-      return res.data;
+      const res = await axiosSecure.get("/public/issues?page=1&limit=20");
+      return res.data.issues || [];
     },
   });
 
   if (isLoading) {
-    return <p className="text-center mt-10"><span className="loading loading-spinner loading-xl"></span></p>;
+    return (
+      <p className="text-center mt-10">
+        <span className="loading loading-spinner loading-xl"></span>
+      </p>
+    );
   }
 
-  // ✅ filter + sort + limit
-  const resolvedIssues = issues
-    .filter(i => i.status === "resolved" || i.status === "closed")
-    .sort((a, b) => new Date(b.updatedAt || b.createdAt) - new Date(a.updatedAt || a.createdAt))
+  if (isError) {
+    return <p className="text-center mt-10 text-red-500">Failed to load issues</p>;
+  }
+
+
+  const resolvedIssues = data
+    .filter((i) => i.status === "resolved" || i.status === "closed")
+    .sort(
+      (a, b) =>
+        new Date(b.updatedAt || b.createdAt) - new Date(a.updatedAt || a.createdAt)
+    )
     .slice(0, 6);
 
   return (
@@ -32,9 +45,8 @@ const LatestResolvedIssues = () => {
       </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {resolvedIssues.map(issue => (
+        {resolvedIssues.map((issue) => (
           <div key={issue._id} className="card bg-base-100 shadow hover:shadow-xl transition">
-
             <figure>
               <img
                 src={issue.image}
@@ -57,15 +69,17 @@ const LatestResolvedIssues = () => {
                   {issue.status}
                 </span>
 
-                <span className={`badge ${
-                  issue.priority === "high" ? "badge-error" : "badge-info"
-                }`}>
+                <span
+                  className={`badge ${issue.priority === "high" ? "badge-error" : "badge-info"
+                    }`}
+                >
                   {issue.priority}
                 </span>
               </div>
 
-              <p className="text-sm mt-2">
-                📍 {issue.location || "Unknown"}
+              <p className="text-sm mt-2 flex gap-2 items-center">
+                <FaLocationDot />
+                {issue.location || "Unknown"}
               </p>
 
               <div className="card-actions justify-end mt-4">
@@ -77,7 +91,6 @@ const LatestResolvedIssues = () => {
                 </button>
               </div>
             </div>
-
           </div>
         ))}
       </div>
